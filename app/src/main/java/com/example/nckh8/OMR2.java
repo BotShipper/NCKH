@@ -60,9 +60,7 @@ public class OMR2 {
                         hOld = hCurr;
                     }
                 }
-
             }
-
         }
         return ansBlocks;
     }
@@ -102,7 +100,8 @@ public class OMR2 {
                 // Convert to grayscale
                 Imgproc.cvtColor(bubbleChoice, bubbleChoice, Imgproc.COLOR_BGR2GRAY);
 
-                Imgproc.threshold(bubbleChoice, bubbleChoice, 0, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+                Imgproc.threshold(bubbleChoice, bubbleChoice, 0, 255, Imgproc.THRESH_BINARY_INV
+                        | Imgproc.THRESH_OTSU);
 
                 Imgproc.resize(bubbleChoice, bubbleChoice, new org.opencv.core.Size(28, 28));
                 bubbleChoice = bubbleChoice.reshape(1); // Reshape to a single channel Mat
