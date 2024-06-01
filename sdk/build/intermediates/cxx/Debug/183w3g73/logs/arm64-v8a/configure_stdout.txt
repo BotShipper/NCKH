@@ -12,4 +12,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: E:/Projects Android/NCKH-master 2/sdk/.cxx/Debug/183w3g73/arm64-v8a
+-- Build files have been written to: E:/Projects Android/NCKH-master/sdk/.cxx/Debug/183w3g73/arm64-v8a

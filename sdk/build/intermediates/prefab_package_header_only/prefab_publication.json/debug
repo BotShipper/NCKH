@@ -1,5 +1,5 @@
 {
-  "installationFolder": "E:\\Projects Android\\NCKH-master 2\\sdk\\build\\intermediates\\prefab_package\\debug\\prefab",
+  "installationFolder": "E:\\Projects Android\\NCKH-master\\sdk\\build\\intermediates\\prefab_package\\debug\\prefab",
   "gradlePath": ":sdk",
   "packageInfo": {
     "packageName": "sdk",
@@ -8,7 +8,7 @@
     "modules": [
       {
         "moduleName": "opencv_jni_shared",
-        "moduleHeaders": "E:\\Projects Android\\NCKH-master 2\\sdk\\native\\jni\\include",
+        "moduleHeaders": "E:\\Projects Android\\NCKH-master\\sdk\\native\\jni\\include",
         "moduleExportLibraries": [],
         "abis": []
       }
