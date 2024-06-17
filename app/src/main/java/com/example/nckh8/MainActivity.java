@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
                 if (number.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Vui lòng nhập số", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(MainActivity.this, ListCorrectAnswers.class);
+                    Intent intent = new Intent(MainActivity.this, ListExamCode.class);
                     intent.putExtra("number", number);
 
-                    startActivityForResult(intent, 1010);
+                    startActivity(intent);
                 }
             }
         });

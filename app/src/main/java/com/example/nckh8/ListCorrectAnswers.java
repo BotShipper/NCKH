@@ -2,6 +2,8 @@ package com.example.nckh8;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import static com.example.nckh8.ListExamCode.examCodeArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +38,7 @@ public class ListCorrectAnswers extends AppCompatActivity {
     String[] numericalOrder;
     ListView lvCorrectAnswers;
     Button btnSelectImage;
-    Toolbar tb_back_main;
-
+    Toolbar tb_back_exam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class ListCorrectAnswers extends AppCompatActivity {
 
         lvCorrectAnswers = findViewById(R.id.lv_correct_answers);
         btnSelectImage = findViewById(R.id.btn_select_image);
-        tb_back_main = findViewById(R.id.tb_back_main);
+        tb_back_exam = findViewById(R.id.tb_back_exam);
 
         // Tải thư viện OpenCV
         if (!OpenCVLoader.initDebug()) {
@@ -55,8 +56,15 @@ public class ListCorrectAnswers extends AppCompatActivity {
             Log.d(TAG, "OpenCV library loaded successfully");
         }
 
-        Intent intent = getIntent();
-        String number = intent.getStringExtra("number");
+        String code = getIntent().getStringExtra("code");
+        ArrayList<String> answers = getIntent().getStringArrayListExtra("answers");
+        String number = getIntent().getStringExtra("number");
+
+        int index = 0;
+        index = getIntent().getIntExtra("index", index);
+
+        // Đặt tiêu đề cho trang chọn đáp án
+        tb_back_exam.setTitle("Mã đề " + code);
 
         if (number != null) {
             numericalOrder = new String[Integer.parseInt(number)];
@@ -70,21 +78,33 @@ public class ListCorrectAnswers extends AppCompatActivity {
             }
 
             // Đặt bộ điều hợp để điền dữ liệu vào ListView
-            AdapterCorrectAnswer adapterCorrectAnswer = new AdapterCorrectAnswer(getApplicationContext(), numericalOrder);
+            AdapterCorrectAnswer adapterCorrectAnswer = new AdapterCorrectAnswer(getApplicationContext(), numericalOrder, code, answers, index);
             lvCorrectAnswers.setAdapter(adapterCorrectAnswer);
 
             btnSelectImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*");
-                    startActivityForResult(intent,1000);
+                    boolean check = true;
 
+                    // Kiểm tra chọn hết đán án chưa
+                    for (int i = 0; i < Integer.parseInt(number); i++) {
+                        if(AdapterCorrectAnswer.correctAnswers.get(i).equals("Null ")) {
+                            Toast.makeText(ListCorrectAnswers.this, "Chưa chọn đáp án câu " + (i+1), Toast.LENGTH_SHORT).show();
+                            check =false;
+                            break;
+                        }
+                        Log.d("check", AdapterCorrectAnswer.correctAnswers.get(i));
+                    }
+                    if (check) {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+                        startActivityForResult(intent,1000);
+                    }
                 }
             });
 
             // setup toolbar back
-            setSupportActionBar(tb_back_main);
+            setSupportActionBar(tb_back_exam);
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         } else {
             finish();

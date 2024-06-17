@@ -1,5 +1,7 @@
 package com.example.nckh8;
 
+import static com.example.nckh8.ListExamCode.examCodeArrayList;
+
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -17,20 +19,27 @@ public class AdapterCorrectAnswer extends BaseAdapter {
     String[] listNumericalOrder;
     LayoutInflater inflater;
 
+
     TextView numericalOrder;
     RadioButton A, B, C, D;
 
     public static ArrayList<String> correctAnswers;
+    String code;
+    int index;
 
-    public AdapterCorrectAnswer(Context context, String[] listNumericalOrder) {
+    public AdapterCorrectAnswer(Context context, String[] listNumericalOrder, String code,ArrayList<String> correctAnswers, int index) {
         this.context = context;
         this.listNumericalOrder = listNumericalOrder;
+        AdapterCorrectAnswer.correctAnswers = correctAnswers;
+        this.code = code;
+        this.index = index;
 
-        // khởi tạo danh sách mảng và thêm chuỗi tĩnh cho tất cả các câu hỏi
-        correctAnswers = new ArrayList<>();
-        for (int i = 0; i < listNumericalOrder.length; i++) {
-            correctAnswers.add("Chưa chọn");
+        if (correctAnswers.isEmpty()) {
+            for (int i = 0; i < listNumericalOrder.length; i++) {
+                correctAnswers.add("Null ");
+            }
         }
+
         inflater = LayoutInflater.from(context);
     }
 
@@ -122,79 +131,9 @@ public class AdapterCorrectAnswer extends BaseAdapter {
 
         // Đặt giá trị trong TextView
         numericalOrder.setText(listNumericalOrder[position]);
+        ExamCode examCode = new ExamCode(code, correctAnswers);
+        examCodeArrayList.set(index, examCode);
 
         return convertView;
     }
 }
-
-//public class AdapterCorrectAnswer extends BaseAdapter {
-//    Context context;
-//    String[] listNumericalOrder;
-//    LayoutInflater inflater;
-//
-//    // Tham chiếu
-//    TextView numericalOrder;
-//    RadioButton A, B, C, D;
-//
-//    private SparseBooleanArray checkedStates; // Dùng để lưu trạng thái của RadioButton đã chọn
-//
-//    public AdapterCorrectAnswer(Context context, String[] listNumericalOrder) {
-//        this.context = context;
-//        this.listNumericalOrder = listNumericalOrder;
-//        inflater = LayoutInflater.from(context);
-//        checkedStates = new SparseBooleanArray();
-//    }
-//
-//    @Override
-//    public int getCount() {
-//        return listNumericalOrder.length;
-//    }
-//
-//    @Override
-//    public Object getItem(int position) {
-//        return null;
-//    }
-//
-//    @Override
-//    public long getItemId(int position) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public View getView(final int position, View convertView, ViewGroup parent) {
-//        convertView = inflater.inflate(R.layout.item_correct_answer, null);
-//
-//        // Lấy tham chiếu của TextView và RadioButton
-//        numericalOrder = convertView.findViewById(R.id.tv_numerical_order);
-//        A = convertView.findViewById(R.id.rdo_a);
-//        B = convertView.findViewById(R.id.rdo_b);
-//        C = convertView.findViewById(R.id.rdo_c);
-//        D = convertView.findViewById(R.id.rdo_d);
-//
-//        // Đặt giá trị trong TextView
-//        numericalOrder.setText(listNumericalOrder[position]);
-//
-//        // Đặt trạng thái của RadioButton dựa trên checkedStates
-//        A.setChecked(checkedStates.get(position) && checkedStates.keyAt(position) == A.getId());
-//        B.setChecked(checkedStates.get(position) && checkedStates.keyAt(position) == B.getId());
-//        C.setChecked(checkedStates.get(position) && checkedStates.keyAt(position) == C.getId());
-//        D.setChecked(checkedStates.get(position) && checkedStates.keyAt(position) == D.getId());
-//
-//        // Xử lý sự kiện khi RadioButton được chọn
-//        CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                // Lưu trạng thái của RadioButton đã chọn vào checkedStates
-//                checkedStates.put(position, isChecked);
-//            }
-//        };
-//
-//        // Gán sự kiện cho RadioButton
-//        A.setOnCheckedChangeListener(checkedChangeListener);
-//        B.setOnCheckedChangeListener(checkedChangeListener);
-//        C.setOnCheckedChangeListener(checkedChangeListener);
-//        D.setOnCheckedChangeListener(checkedChangeListener);
-//
-//        return convertView;
-//    }
-//}

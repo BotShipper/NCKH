@@ -9,20 +9,22 @@
     tools:context=".ListCorrectAnswers" >
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_back_main"
+        android:id="@+id/tb_back_exam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="#3F51B5"
-        app:title="Chọn đáp án đúng ở bên dưới"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:subtitle="Chọn đáp án đúng ở bên dưới"
+        app:subtitleTextColor="#B9FFFFFF"
+        app:title="Mã đề" />
 
     <ListView
         android:id="@+id/lv_correct_answers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_select_image"
-        android:layout_below="@+id/tb_back_main"/>
+        android:layout_below="@+id/tb_back_exam"/>
 
     <Button
         android:id="@+id/btn_select_image"
